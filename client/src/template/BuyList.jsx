@@ -24,4 +24,6 @@ const BuyList = () => {
 	);
 };
 
+
+    
 export default BuyList;
