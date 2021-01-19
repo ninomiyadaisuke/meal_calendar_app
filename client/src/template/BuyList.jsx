@@ -1,11 +1,27 @@
-import React from 'react'
+import React, { useState } from "react";
+import { getTestMessage } from "../functions/buyList";
 
 const BuyList = () => {
-  return (
-    <div>
-      買い物リストです
-    </div>
-  )
-}
+	const [message, setMessage] = useState("");
+	const resetMessage = () => {
+		setMessage("");
+	};
+	const getMessage = () => {
+		getTestMessage()
+			.then((res) => {
+				//console.log(res.data.testMessage);
+				setMessage(res.data.testMessage);
+			})
+			.catch((err) => console.log(err));
+	};
+	return (
+		<div>
+			<p>買い物リストページです</p>
+			<button onClick={getMessage}>Message</button>
+			<button onClick={resetMessage}>reset</button>
+			<p>{message}</p>
+		</div>
+	);
+};
 
-export default BuyList
+export default BuyList;
