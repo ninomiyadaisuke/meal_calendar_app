@@ -1,11 +1,7 @@
-import React from 'react'
+import axios from "axios";
 
-const buyList = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+export const getTestMessage = async () => {
+	const message = await axios.get("http://localhost:8000/api/v1/buys/test");
+	return message;
+};
 
-export default buyList
