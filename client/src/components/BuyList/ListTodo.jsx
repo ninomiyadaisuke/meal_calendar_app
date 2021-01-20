@@ -1,25 +1,19 @@
 import React from 'react'
 
-export const ListTodo = (props) => {
-    const {todos,onClickDelete} =props
+const ListTodo = (props) => {
+    const {buyList} =props
     return (
         <div>
-                <p>買い物リスト</p>
-                <ul>
-                    {todos.map((todo, index) => {
-                        return (
-                            <div key={todo} >
-                                <li>{todo}</li>
-                                <button onClick={() => onClickDelete(index)}>削除</button>
-                                
-                                
-                            </div>
-                        );
-                    })}
-                    
-                </ul>
-            </div>
+            {buyList.map((item) => (
+                <div key={item._id}>
+                    <p>{item.item}</p>
+                    <p>{ item.count}</p>
+</div>
+            ))}
+      </div> 
     );
 };
+
+export default ListTodo
 
 
