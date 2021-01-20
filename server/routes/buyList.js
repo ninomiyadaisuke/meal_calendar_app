@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const {
+	test,
+	createBuyList,
+	allGetBuyList,
+} = require("../controllers/buyList");
 
-router.get("/buys/test", (req, res) => {
-	res.json({
-		testMessage: "担当は山口くんです。",
-	});
-});
+router.get("/buys/test", test);
+router.get("/buylists", allGetBuyList);
+router.post("/buylist", createBuyList);
 
 module.exports = router;
