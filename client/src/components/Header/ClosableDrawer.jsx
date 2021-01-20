@@ -27,28 +27,28 @@ const ClosableDrawer = (props) => {
         classes={{ paper: classes.drawerPaper }}
         ModalProps={{keepMounted: true}}
       >
-      <Button component={Link} to="/buylist"
-        color="inherit"
-        style={{ textDecoration: 'none' }}
-      >
+        <Button component={Link} to="/buylist"
+          color="inherit"
+          style={{ textDecoration: 'none' }}
+        >
           買い物リスト
-      </Button>
-      <Divider/>
-      <Button component={Link} to="/user"
-        color="inherit"
-        style={{ textDecoration: 'none' }}
-      >
+        </Button>
+        <Divider/>
+        <Button component={Link} to="/user"
+          color="inherit"
+          style={{ textDecoration: 'none' }}
+        >
           ユーザーリスト
-      </Button> 
-      <Divider/>  
-      <Button
-        color="inherit"
-        style={{ textDecoration: 'none' }}
-      >  
+        </Button> 
+        <Divider/>  
+        <Button
+          color="inherit"
+          style={{ textDecoration: 'none' }}
+        >  
           ログアウト
-      </Button>   
-      <Divider/>  
-    </Drawer>
+        </Button>   
+        <Divider/>  
+      </Drawer>
     </nav>
   )
 }
