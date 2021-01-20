@@ -1,15 +1,18 @@
 import React from "react";
 
-export const InputTodo = (props) => {
-    const { todoText, onChange, onClick} = props;
+const InputTodo = (props) => {
+    const { todoText, onChange, type} = props;
     return (
         <div>
             <input
+              type={type}
                 placeholder="買い物リスト"
                 value={todoText}
                 onChange={onChange}
             />
-            <button onClick={onClick}>追加</button>
+            
         </div>
     )
 };
+
+export default InputTodo
