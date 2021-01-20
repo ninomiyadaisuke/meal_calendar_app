@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Schema;
+//const { ObjectId } = mongoose.Schema;
 
 const mealSchema = new mongoose.Schema({
 	// date: {
@@ -15,10 +15,10 @@ const mealSchema = new mongoose.Schema({
 		type: Array,
 		default: [],
 	},
-	users: {
-		type: ObjectId,
-		ref: "UserList",
-	},
+	// users: {
+	// 	type: ObjectId,
+	// 	ref: "UserList",
+	// },
 });
 
 module.exports = mongoose.model("Meal", mealSchema);
