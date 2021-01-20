@@ -81,9 +81,10 @@ const Header = () => {
       </Button>            
     </div>
           <div className={classes.sectionMobile}>
-            <IconButton className={classes.customHoverFocus}>
+            <IconButton className={classes.customHoverFocus}
+              onClick={handleDrawerToggle}
+            >
               <FormatAlignJustifyIcon
-                onClick={handleDrawerToggle}
                 className={classes.iconColor} /> 
             </IconButton>
           </div>
