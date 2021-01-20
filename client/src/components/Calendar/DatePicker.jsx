@@ -6,6 +6,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+// import { getDate } from 'date-fns';
 
 
 const DatePicker = () => {
@@ -16,6 +17,7 @@ const DatePicker = () => {
     setSelectedDate(date);
     console.log(date);
   };
+  
 
 
   return (
@@ -23,7 +25,7 @@ const DatePicker = () => {
       <Grid container justify="space-around">
         <KeyboardDatePicker
           disableToolbar
-          variant="inline"
+          variant="static"
           format="MM/dd/yyyy"
           margin="normal"
           id="date-picker-inline"

@@ -8,7 +8,7 @@ const Calendar = () => {
 		<>
 			<DatePicker />
       <MealMenu/>
-      <UserCheckList/>
+			<UserCheckList />
 		</>
 
 	);
