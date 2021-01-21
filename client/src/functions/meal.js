@@ -1,6 +1,12 @@
 import axios from "axios";
+import { BaseUrl } from "../config"
 
 export const getTestMealMessage = async () => {
-	const message = await axios.get("http://localhost:8000/api/v1/meals/test");
+	const message = await axios.get(`${BaseUrl}/test`);
 	return message;
 };
+
+export const getMealAll = async () => {
+	const meals = await axios.get(`${BaseUrl}/meals`)
+	return meals
+}

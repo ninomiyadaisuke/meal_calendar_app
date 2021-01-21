@@ -2,9 +2,10 @@ const mongoose = require("mongoose");
 //const { ObjectId } = mongoose.Schema;
 
 const mealSchema = new mongoose.Schema({
-	// date: {
-	//   //
-	// },
+	date: {
+		type: String,
+		required: true,	
+	},
 	main: {
 		type: String,
 		required: true,
