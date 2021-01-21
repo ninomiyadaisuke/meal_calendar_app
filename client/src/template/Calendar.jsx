@@ -12,12 +12,9 @@ const Calendar = () => {
 		})
 	}
 
-
 	useEffect(() => {
 		callMeals()
 	},[])
-
-
 	return (
 		<>
 			
