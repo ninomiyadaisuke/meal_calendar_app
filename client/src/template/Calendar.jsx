@@ -3,8 +3,19 @@ import {DatePicker, InputMeal, MealMenu, UserCheckList } from "../components/Cal
 import { createMeal, getAllMeals } from "../functions/meal"
 import { initialDate } from "../functions/initialDate"
 
+const initialState = {
+	date: initialDate,
+	main: "",
+	rice: "",
+	soup: "",
+	subMenu1: "",
+	subMenu2: "",
+	subMenu3: "",
+}
+
 const Calendar = () => {
-	const [main, setMain] = useState("")
+	const [values, setValues] = useState(initialState)
+	// const [main, setMain] = useState("")
 	const [selectedDate, setSelectedDate] = useState(initialDate);
 	const [getMeals, setGetMeals] = useState([])
   console.log(selectedDate);
@@ -15,9 +26,13 @@ const Calendar = () => {
 	setSelectedDate(formatted);
   };
 
-	const ChangeMain = (e) => {
-		setMain(e.target.value)
-		console.log(main);
+	// const ChangeMain = (e) => {
+	// 	setValues(e.target.value)
+	// 	console.log(main);
+	// }
+		const ChangeMain = (e) => {
+		setValues({ ...values, [e.target.name]: e.target.value })
+		console.log(e.target.name, '----', e.target.value);
 	}
 
 	const callMeals = () => {
@@ -27,14 +42,15 @@ const Calendar = () => {
 	}
 
 	const ClickMeal = () => {
-		createMeal(main,selectedDate)
+		// console.log(values);
+		createMeal(values)
 			.then((res) => {
-			console.log(selectedDate,main);
-				alert(`${res.data.main}を追加しました`)
+			console.log(values);
+				alert(`メニューをを追加しました`)
 				callMeals()
-			setMain("")
+			setValues(initialState)
 			setSelectedDate(initialDate)
-				
+			window.location.reload()	
 		})
 	}
 
@@ -46,8 +62,8 @@ const Calendar = () => {
 	return (
 		<>
 			<DatePicker  handleDateChange={handleDateChange}/>
-			<InputMeal main={main} onChange={ChangeMain} selectedDate={selectedDate} click={ClickMeal}/> 
-			<MealMenu meals={getMeals}/>
+			<InputMeal main={values} onChange={ChangeMain}  click={ClickMeal}/> 
+			<MealMenu meals={getMeals} initialState={initialState} setValues={setValues} setGetMeals={setGetMeals}/> 
 			<UserCheckList />
 		</>
 

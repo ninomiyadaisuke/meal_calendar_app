@@ -1,11 +1,5 @@
 const Meal = require("../models/meal");
 
-exports.test = (req, res) => {
-	res.json({
-		testMessage: "カレンダー担当は二ノ宮さんです。",
-	});
-};
-
 exports.createMeal = async (req, res) => {
 	try {
 		const newMeal = await new Meal(req.body).save();
@@ -20,3 +14,13 @@ exports.allGetMeals = async (req, res) => {
 	const list = await Meal.find({}).exec();
 	res.json(list);
 };
+
+exports.removeMeal = async (req, res) => {
+	try { 
+		const removeMeal = await Meal.findOneAndDelete( req.params._id ).exec()
+		res.json(removeMeal)
+	} catch (err) {
+		console.log(err);
+    res.status(400).json('Not Deleted')
+}
+}

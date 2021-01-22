@@ -12,10 +12,9 @@ const mealSchema = new mongoose.Schema({
 	},
 	rice: String,
 	soup: String,
-	subMenus: {
-		type: [{ subMenu: String }],
-		default: [],
-	},
+	subMenu1: String,
+	subMenu2: String,
+	subMenu3: String
 	// users: {
 	// 	type: ObjectId,
 	// 	ref: "UserList",

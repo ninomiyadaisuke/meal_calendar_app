@@ -6,8 +6,23 @@ const InputMeal = (props) => {
   return (
     <>
       <div>
-        <TextField type="text" placeholder="メイン" onChange={onChange}/>
+        <TextField name="main" type="text" placeholder="メイン" onChange={onChange}/>
       </div>
+      <div>
+        <TextField name="rice" type="text" placeholder="ライス" onChange={onChange}/>
+      </div> 
+      <div>
+        <TextField name="soup" type="text" placeholder="スープ" onChange={onChange}/>
+      </div> 
+      <div>
+        <TextField name="subMenu1" type="text" placeholder="副菜" onChange={onChange}/>
+      </div>  
+      <div>
+        <TextField name="subMenu2" type="text" placeholder="副菜" onChange={onChange}/>
+      </div>   
+      <div>
+        <TextField name="subMenu3" type="text" placeholder="副菜" onChange={onChange}/>
+      </div>           
       <div>
         <button onClick={click}>追加</button>
       </div>      
