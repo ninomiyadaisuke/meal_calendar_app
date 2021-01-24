@@ -1,11 +1,5 @@
 const BuyList = require("../models/buyList");
 
-exports.test = (req, res) => {
-	res.json({
-		testMessage: "担当は山口くんです。",
-	});
-};
-
 exports.createBuyList = async (req, res) => {
 	try {
 		const newBuyList = await new BuyList(req.body).save();
@@ -16,7 +10,58 @@ exports.createBuyList = async (req, res) => {
 	}
 };
 
+exports.getBuylist = async (req, res) => {
+	try {
+		getBuy = await BuyList.findOne({ _id: req.params._id })
+		res.json(getBuy)
+	} catch(err) {
+		console.log(err);
+res.status(400).json('Not Get Buylist')
+	}
+}
+
 exports.allGetBuyList = async (req, res) => {
 	const list = await BuyList.find({}).exec();
 	res.json(list);
 };
+
+exports.getBuyListByDate = async (req, res) => {
+
+	try {
+	const date = req.params.date
+	const findDate = await BuyList.find({date}).exec();
+	res.json(findDate);
+	console.log(findDate);
+} catch (err) {
+	console.log(err);
+	res.status(400).json('Not Found!')
+}
+	
+};
+
+exports.removeBuylist = async (req, res) => {
+	try { 
+		const removeBuylist = await BuyList.findOneAndDelete( req.params._id ).exec()
+		res.json(removeBuylist)
+	} catch (err) {
+		console.log(err);
+    res.status(400).json('Not Deleted')
+}
+	
+}
+
+exports.updateBuylist = async (req, res) => {
+	try { 
+		const {item, count} = req.body
+		const updateBuylist = await BuyList.findOneAndUpdate(
+			 req.params._id ,
+			{item, count}, 
+			{ new: true })
+			.exec()
+		res.json(updateBuylist)
+	} catch (err) {
+		console.log(err);
+    res.status(400).json('Not Updated')
+}
+	
+}
