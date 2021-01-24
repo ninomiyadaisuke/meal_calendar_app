@@ -1,69 +1,95 @@
 import React, { useState, useEffect } from "react";
-import { getTestMessage } from "../functions/buyList";
-import { ListTodo, InputTodo } from '../components/BuyList'
-import { createBuyList,  getAllBuylist} from '../functions/buyList'
+import { ListTodo, InputTodo, DatePicker } from '../components/BuyList'
+import { createBuyList, getBuylistByDate, removeBuyList } from '../functions/buyList'
+import {dateChange} from '../functions/formatValue'
+
+
 
 
 const BuyList = () => {
+  const initialDate = dateChange(new Date)
   const [item, setItem] = useState("")
   const [count, setCount] = useState(1);
-const [getBuylist, setGetBuylist] = useState([])
-
-    useEffect(() => {
-      loadBuylist()
-    }, [])
+  const [selectedDate, setSelectedDate] = useState(initialDate);
+  const [selectBuylist, setSelectbuylist] = useState([])
   
-  const loadBuylist = () => {
-    getAllBuylist().then((res) => {
-        //console.log(res.data);
-      setGetBuylist(res.data)
-      })
+
+//selectedDateの更新のたびに再レンダリング
+  useEffect(() => {
+      loadSelectBuylist(selectedDate)
+    }, [selectedDate])
+
+
+  const loadSelectBuylist = (date) => {
+    //console.log(date);
+    getBuylistByDate(date).then((res) => {
+      setSelectbuylist(res.data)
+      //console.log(res.data);
+    })
   }
-
   
-  //const onChangeTodoText = (event) => setTodoText(event.target.value);
+//Dateをformat
+  const handleDateChange = (date) => {
+    const newDate = dateChange(date)
+    setSelectedDate(newDate);
+    loadSelectBuylist(newDate)
+    //console.log(typeof newDate, newDate);
+  };
+
 
     const onClickItems = () => {
       //console.log(item, count);
-      createBuyList(item, count)
+      createBuyList(item, count, selectedDate)
         .then((res) => {
           alert(`${res.data.item}を追加しました。`)
           setItem("")
           setCount(1)
-　　　　　　loadBuylist()
+          loadSelectBuylist(selectedDate)
       })
-
     };
-
-    // const onClickDelete = (index) => {
-    //     const newTodos = [...buyListTodos];
-    //     newTodos.splice(index, 1)
-    //     setbuyListTodos(newTodos);
-    // };
   
+
   const onChangecount = (e) => {
     setCount(e.target.value)
-    //console.log(count);
+    // console.log(count);
   }
 
   const onChangeItem = (e) => {
     setItem(e.target.value)
     //console.log(item);
   }
-  
-    
+
+
+
+  const setRemove = (id) => {
+    if (window.confirm('本当に削除しますか？')) {
+        //console.log(id);
+        removeBuyList(id).then((res) => {
+          alert(`${res.data.item}を削除しました。`)
+          loadSelectBuylist(selectedDate)
+        })
+    } else {
+        return false
+    } 
+  }
+
+　
 	return (
     <div>
-      
+      <DatePicker selectedDate={selectedDate} handleDateChange={handleDateChange}/>
       <InputTodo type={"text"} todoText={item} onChange={onChangeItem} />
-      <InputTodo type={"number"} todoText={count} onChange={onChangecount}/>
+      <InputTodo 
+        type={"number"}
+        todoText={count} 
+        onChange={onChangecount}
+      />
       <button onClick={onClickItems}>追加</button>
-			
-      <ListTodo buyList={getBuylist} />
-      {/* <p>買い物リストページです</p>
-			<button onClick={getMessage}>Message</button>
-			<button onClick={resetMessage}>reset</button>
-			<p>{message}</p> */}
+      <ListTodo
+        buyList={selectBuylist}
+        setRemove={setRemove}
+        selectedDate={selectedDate}
+        loadSelectBuylist={loadSelectBuylist}
+      />
 		</div>
 	);
 };

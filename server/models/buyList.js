@@ -9,7 +9,10 @@ const buyListShema = new mongoose.Schema({
 		type: Number,
 		default: 1,
 	},
-	//date: Date
+	date: {
+		type: String,
+		required: true
+	}
 });
 
 module.exports = mongoose.model("BuyList", buyListShema);

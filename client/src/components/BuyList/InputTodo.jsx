@@ -5,7 +5,7 @@ const InputTodo = (props) => {
     return (
         <div>
             <input
-              type={type}
+                type={type}
                 placeholder="買い物リスト"
                 value={todoText}
                 onChange={onChange}
