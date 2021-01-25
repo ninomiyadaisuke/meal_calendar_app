@@ -6,6 +6,11 @@ export const createMeal = async (dateValues) => {
 	return meal   
 }
 
+export const getMealDate = async (selectedDate) => {
+	const findDate = await axios.get(`${BaseUrl}/meal/date/${selectedDate}`, {date: selectedDate});
+	return findDate; 
+}
+
 export const getAllMeals = async () => {
 	const meals = await axios.get(`${BaseUrl}/meals`)
 	return meals

@@ -22,5 +22,19 @@ exports.removeMeal = async (req, res) => {
 	} catch (err) {
 		console.log(err);
     res.status(400).json('Not Deleted')
+  }
 }
-}
+
+exports.getMealByDate = async (req, res) => {
+
+	try {
+		const date = req.params.date
+		const findDate = await Meal.find({date}).exec();
+		res.json(findDate);
+		console.log(findDate);
+	} catch (err) {
+		console.log(err);
+		res.status(400).json('Not Found!')
+	}
+	
+};

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import {DatePicker, InputMeal, MealMenu, UserCheckList } from "../components/Calendar"
-import { createMeal, getAllMeals } from "../functions/meal"
+import { createMeal, getAllMeals, getMealDate } from "../functions/meal"
 import { dateChange } from "../functions/formatValue"
 
 
@@ -27,20 +27,17 @@ const Calendar = () => {
 		console.log(newDate);
   };   
 
-	// const ChangeMain = (e) => {
-	// 	setValues(e.target.value)
-	// 	console.log(main);
-	// }
 		const ChangeMain = (e) => {
 			setValues({ ...values, [e.target.name]: e.target.value })
       console.log(e.target.name, '----', e.target.value);
 	}
 
 	const callMeals = () => {
-		getAllMeals().then((res) => {
+		getMealDate(selectedDate).then((res) => {
 			setGetMeals(res.data)
 		})
 	}
+	
 
 	const ClickMeal = () => { 
 		const date = selectedDate
@@ -57,11 +54,10 @@ const Calendar = () => {
 		})
 	}
 
-
-
 	useEffect(() => {
 		callMeals()
-	},[])
+	}, [selectedDate])
+	
 	return (
 		<>
 			<DatePicker handleDateChange={handleDateChange} selectedDate={selectedDate}/>
