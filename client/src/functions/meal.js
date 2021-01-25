@@ -1,6 +1,17 @@
 import axios from "axios";
+import { BaseUrl } from "../config"
 
-export const getTestMealMessage = async () => {
-	const message = await axios.get("http://localhost:8000/api/v1/meals/test");
-	return message;
-};
+export const createMeal = async ( date, values) => {
+	const meal = await axios.post(`${BaseUrl}/meal`, date, values  )  
+	return meal 
+}
+
+export const getAllMeals = async () => {
+	const meals = await axios.get(`${BaseUrl}/meals`)
+	return meals
+}
+
+export const deleteMeals = async (id) => {
+	const deleteMeal = await axios.delete(`${BaseUrl}/meal/${id}`)
+	return deleteMeal
+}
