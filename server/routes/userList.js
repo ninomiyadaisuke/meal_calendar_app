@@ -8,6 +8,6 @@ const {
 
 router.get("/users/test", test);
 router.get("/users", allGetUserList);
-router.post("/user", createUserList);
+router.post("/userlist", createUserList);
 
 module.exports = router;
