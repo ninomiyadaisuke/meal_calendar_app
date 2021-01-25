@@ -14,9 +14,8 @@ const DatePicker = (props) => {
   <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Grid container justify="space-around">
         <KeyboardDatePicker
-          name="date"
           disableToolbar
-          variant="static"
+          variant="inline"
           format="MM/dd/yyyy"
           margin="normal"
           id="date-picker-inline"
