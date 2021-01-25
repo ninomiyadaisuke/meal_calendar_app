@@ -1,9 +1,9 @@
 import axios from "axios";
 import { BaseUrl } from "../config"
 
-export const createMeal = async (values) => {
-	const meal = await axios.post(`${BaseUrl}/meal`,  values)
-	return meal
+export const createMeal = async ( date, values) => {
+	const meal = await axios.post(`${BaseUrl}/meal`, date, values  )  
+	return meal 
 }
 
 export const getAllMeals = async () => {

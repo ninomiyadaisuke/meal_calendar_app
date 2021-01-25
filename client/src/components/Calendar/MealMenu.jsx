@@ -10,6 +10,7 @@ const MealMenu = (props) => {
     deleteMeals(id).then(res => {
       getAllMeals().then(res => {
         setGetMeals(res)
+        window.location.reload()	
       })
     })            
     } else {
@@ -21,6 +22,7 @@ const MealMenu = (props) => {
     <div>
       {meals.length > 0 ? (meals.map((meal) => (
         <div key={meal._id}>
+          <p>{meal.date}</p>
           <p>{meal.main}</p>
           <p>{meal.rice}</p>
           <p>{meal.soup}</p>

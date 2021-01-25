@@ -8,14 +8,15 @@ import {
 } from '@material-ui/pickers';
 
 const DatePicker = (props) => {
-  const { handleDateChange, selectedDate} = props
+  const { handleDateChange,selectedDate} = props
 
   return (
   <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Grid container justify="space-around">
         <KeyboardDatePicker
+          name="date"
           disableToolbar
-          variant="inline"
+          variant="static"
           format="MM/dd/yyyy"
           margin="normal"
           id="date-picker-inline"

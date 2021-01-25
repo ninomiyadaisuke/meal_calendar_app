@@ -4,7 +4,7 @@ import { TextField } from "@material-ui/core"
 const InputMeal = (props) => {
   const {click,onChange } = props
   return (
-    <>
+    <>      
       <div>
         <TextField name="main" type="text" placeholder="メイン" onChange={onChange}/>
       </div>

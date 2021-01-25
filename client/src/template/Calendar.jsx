@@ -3,8 +3,10 @@ import {DatePicker, InputMeal, MealMenu, UserCheckList } from "../components/Cal
 import { createMeal, getAllMeals } from "../functions/meal"
 import { initialDate } from "../functions/initialDate"
 
-const initialState = {
-	date: initialDate,
+
+const Calendar = () => {
+	const initialState = {
+	// date: "",
 	main: "",
 	rice: "",
 	soup: "",
@@ -13,18 +15,18 @@ const initialState = {
 	subMenu3: "",
 }
 
-const Calendar = () => {
 	const [values, setValues] = useState(initialState)
 	// const [main, setMain] = useState("")
 	const [selectedDate, setSelectedDate] = useState(initialDate);
 	const [getMeals, setGetMeals] = useState([])
-  console.log(selectedDate);
+	
 	const handleDateChange = (date) => {
 	const beforeDate = date
 	const formatted = `${beforeDate.getFullYear()}-${beforeDate.getMonth() + 1}-${beforeDate.getDate()}`
 	.replace(/\n|\r/g, '');
-	setSelectedDate(formatted);
-  };
+		setSelectedDate(formatted);
+		console.log(selectedDate);
+  };   
 
 	// const ChangeMain = (e) => {
 	// 	setValues(e.target.value)
@@ -42,7 +44,7 @@ const Calendar = () => {
 	}
 
 	const ClickMeal = () => {
-		// console.log(values);
+		console.log(values);
 		createMeal(values)
 			.then((res) => {
 			console.log(values);
@@ -61,7 +63,7 @@ const Calendar = () => {
 	},[])
 	return (
 		<>
-			<DatePicker  handleDateChange={handleDateChange}/>
+			<DatePicker handleDateChange={handleDateChange} selectedDate={selectedDate}/>
 			<InputMeal main={values} onChange={ChangeMain}  click={ClickMeal}/> 
 			<MealMenu meals={getMeals} initialState={initialState} setValues={setValues} setGetMeals={setGetMeals}/> 
 			<UserCheckList />
