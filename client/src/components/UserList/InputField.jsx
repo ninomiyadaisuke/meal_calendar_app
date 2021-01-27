@@ -4,10 +4,10 @@ import {createUserList} from '../../functions/userList'
 
 const InputField = (props) => {
 
-  const {handleChange, handleClick} = props
+  const {handleChange, handleClick, name} = props
   return (
     <>
-      <input type="text" onChange={handleChange} />
+      <input type="text" value={name} onChange={handleChange} />
 			<button onClick={handleClick}>ユーザーを作成</button> 
     </>
   )

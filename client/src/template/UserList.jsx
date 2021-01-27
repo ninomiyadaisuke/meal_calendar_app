@@ -50,6 +50,7 @@ const UserList = () => {
 			<InputField
 				handleChange={handleChange}
 				handleClick={handleClick}
+				name={name}
 			/>
 			{/* {JSON.stringify(userList)} */}
 			{userList && userList.map((user) => (
