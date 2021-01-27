@@ -77,7 +77,10 @@ const BuyList = () => {
 	return (
     <div>
       <DatePicker selectedDate={selectedDate} handleDateChange={handleDateChange}/>
-      <InputTodo type={"text"} todoText={item} onChange={onChangeItem} />
+      <InputTodo
+        type={"text"}
+        todoText={item}
+        onChange={onChangeItem} />
       <InputTodo 
         type={"number"}
         todoText={count} 

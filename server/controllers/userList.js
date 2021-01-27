@@ -1,4 +1,5 @@
 const UserList = require("../models/userList");
+const slugify = require('slugify')
 
 exports.test = (req, res) => {
 	res.json({
@@ -20,3 +21,32 @@ exports.allGetUserList = async (req, res) => {
 	const list = await UserList.find({}).exec();
 	res.json(list);
 };
+
+exports.removeUserlist = async(req, res) => {
+	//console.log(req.body);
+	try { 
+		const remove = await UserList.findByIdAndDelete(  req.params.id ).exec()
+		res.json(remove)
+	} catch (err) {
+		console.log(err);
+    res.status(400).json('Not Deleted')
+  }
+	
+}
+
+exports.updateUserList = async (req, res) => {
+	try { 
+		//const {name} = req.body
+		const update = await UserList.findByIdAndUpdate(
+			req.params.id ,
+			req.body, 
+			{ new: true })
+			.exec()
+		res.json(update)
+	} catch (err) {
+		console.log(err);
+    res.status(400).json('Not Updated')
+  }
+	
+}
+

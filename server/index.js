@@ -36,6 +36,6 @@ app.use(process.env.DEFAULT_URL, BuyListRouter);
 
 //port
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8000;
 
 app.listen(port, () => console.log(`${port}で起動中・・・`));
