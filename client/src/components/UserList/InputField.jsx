@@ -1,5 +1,4 @@
 import React from 'react'
-import {createUserList} from '../../functions/userList'
 
 
 const InputField = (props) => {
