@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react"
-import {DatePicker, InputMeal, MealMenu, UserCheckList } from "../components/Calendar"
+import {
+	CheckUserList,
+	DatePicker,
+	InputMeal,
+	MealMenu,
+	UserCheckList
+} from "../components/Calendar"
 import { createMeal, getMealDate } from "../functions/meal"
 import { dateChange } from "../functions/formatValue"
 
@@ -65,6 +71,7 @@ const Calendar = () => {
 				setGetMeals={setGetMeals}
 				values={values}/> 
 			<UserCheckList />
+			<CheckUserList/>
 		</>
 	);
 };

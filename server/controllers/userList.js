@@ -34,12 +34,12 @@ exports.removeUserlist = async(req, res) => {
 	
 }
 
-exports.updateUserList = async (req, res) => {
+exports.decrementUser = async (req, res) => {
 	try { 
 		//const {name} = req.body
 		const update = await UserList.findByIdAndUpdate(
 			req.params.id ,
-			req.body, 
+			{ $set: { eating: false } },
 			{ new: true })
 			.exec()
 		res.json(update)
@@ -49,4 +49,21 @@ exports.updateUserList = async (req, res) => {
   }
 	
 }
+
+exports.incrementUser = async (req, res) => {
+	try { 
+		//const {name} = req.body
+		const update = await UserList.findByIdAndUpdate(
+			req.params.id ,
+			{ $set: { eating: true } },
+			{ new: true })
+			.exec()
+		res.json(update)
+	} catch (err) {
+		console.log(err);
+    res.status(400).json('Not Updated')
+  }
+	
+}
+
 

@@ -17,3 +17,10 @@ export const removeUserList = async (id) => {
 	return user
 	//console.log(id);
 };
+
+
+export const updateUserList = async (id) => {
+	const updateUser = await axios.put(`${BaseUrl}/update/user/${id}`);
+	return updateUser
+	//console.log(id);
+};
