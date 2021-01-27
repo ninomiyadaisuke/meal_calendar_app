@@ -62,7 +62,11 @@ const Calendar = () => {
 		<>
 			<DatePicker handleDateChange={handleDateChange} selectedDate={selectedDate}/>
 			<InputMeal main={values} onChange={ChangeMain}  click={ClickMeal}/> 
-			<MealMenu meals={getMeals} initialState={initialState} setValues={setValues} setGetMeals={setGetMeals}/> 
+			<MealMenu meals={getMeals}
+				initialState={initialState}
+				setValues={setValues}
+				setGetMeals={setGetMeals}
+				values={values}/> 
 			<UserCheckList />
 		</>
 

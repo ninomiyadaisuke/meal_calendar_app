@@ -40,21 +40,20 @@ exports.getMealByDate = async (req, res) => {
 	
 };
 
-// exports.updateMeal = async (req, res) => {
-// 	try { 
-// 		const {item, count} = req.body
-// 		const updateBuylist = await Meal.findOneAndUpdate(
-// 			req.params._id ,
-// 			{item, count}, 
-// 			{ new: true })
-// 			.exec()
-// 		res.json(updateBuylist)
-// 	} catch (err) {
-// 		console.log(err);
-//     res.status(400).json('Not Updated')
-// }
+exports.updateMeal = async (req, res) => {
+	try { 
+		const updateMeal = await Meal.findOneAndUpdate(
+			req.params.date ,
+			req.body, 
+			{ new: true })
+			.exec()
+		res.json(updateMeal)
+	} catch (err) {
+		console.log(err);
+    res.status(400).json('Not Updated')
+}
 	
-// }
+}
 
 exports.removeMeal = async (req, res) => {
 	try { 
