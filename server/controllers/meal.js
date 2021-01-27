@@ -10,20 +10,10 @@ exports.createMeal = async (req, res) => {
 	}
 };
 
-exports.allGetMeals = async (req, res) => {
+exports.getAllMeals = async (req, res) => {
 	const list = await Meal.find({}).exec();
 	res.json(list);
 };
-
-exports.removeMeal = async (req, res) => {
-	try { 
-		const removeMeal = await Meal.findOneAndDelete( req.params._id ).exec()
-		res.json(removeMeal)
-	} catch (err) {
-		console.log(err);
-    res.status(400).json('Not Deleted')
-  }
-}
 
 exports.getMealByDate = async (req, res) => {
 
@@ -38,3 +28,27 @@ exports.getMealByDate = async (req, res) => {
 	}
 	
 };
+
+exports.updateMeal = async (req, res) => {
+	try { 
+		const updateMeal = await Meal.findOne(
+			req.params.id).exec()
+		const meal = await updateMeal.update(req.body, { new: true }).exec()
+		res.json(meal)
+	} catch (err) {
+		console.log(err);
+    res.status(400).json('Not Updated')
+}
+	
+}
+
+exports.removeMeal = async (req, res) => {
+	try { 
+		const removeMeal = await Meal.findOneAndDelete( req.params.id ).exec()
+		res.json(removeMeal)
+	} catch (err) {
+		console.log(err);
+    res.status(400).json('Not Deleted')
+  }
+}
+

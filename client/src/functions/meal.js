@@ -20,3 +20,9 @@ export const deleteMeals = async (id) => {
 	const deleteMeal = await axios.delete(`${BaseUrl}/meal/${id}`)
 	return deleteMeal
 }
+
+export const updateMeal = async (id, values) => {
+	const updateMeal = await axios.put(`${BaseUrl}/mealedit/${id}`, values);
+	return updateMeal
+};
+

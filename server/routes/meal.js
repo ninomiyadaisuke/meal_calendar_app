@@ -1,11 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const { createMeal, allGetMeals, removeMeal, getMealByDate } = require("../controllers/meal");
+const {
+  createMeal,
+  getAllMeals,
+  getMeal,
+  getMealByDate,
+  updateMeal,
+  removeMeal } = require("../controllers/meal");
 
 
-router.get("/meals", allGetMeals);
-router.post("/meal", createMeal);
+router.get("/meals", getAllMeals);
 router.get('/meal/date/:date', getMealByDate)
+router.post("/meal", createMeal);
+router.put("/mealedit/:id",updateMeal)
 router.delete("/meal/:id", removeMeal);
 
 module.exports = router;

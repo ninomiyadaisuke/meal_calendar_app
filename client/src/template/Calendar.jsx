@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react"
 import {DatePicker, InputMeal, MealMenu, UserCheckList } from "../components/Calendar"
-import { createMeal, getAllMeals, getMealDate } from "../functions/meal"
+import { createMeal, getMealDate } from "../functions/meal"
 import { dateChange } from "../functions/formatValue"
 
 
 const Calendar = () => {
 	const initialState = {
-	// date: "",
 	main: "",
 	rice: "",
 	soup: "",
@@ -17,7 +16,6 @@ const Calendar = () => {
 	
 	const initialDate = dateChange(new Date())
 	const [values, setValues] = useState(initialState)
-	// const [main, setMain] = useState("")
 	const [selectedDate, setSelectedDate] = useState(initialDate);
 	const [getMeals, setGetMeals] = useState([])
 	
@@ -38,7 +36,6 @@ const Calendar = () => {
 		})
 	}
 	
-
 	const ClickMeal = () => { 
 		const date = selectedDate
 		const dateValues = { date, ...values }
@@ -62,10 +59,13 @@ const Calendar = () => {
 		<>
 			<DatePicker handleDateChange={handleDateChange} selectedDate={selectedDate}/>
 			<InputMeal main={values} onChange={ChangeMain}  click={ClickMeal}/> 
-			<MealMenu meals={getMeals} initialState={initialState} setValues={setValues} setGetMeals={setGetMeals}/> 
+			<MealMenu meals={getMeals}
+				initialState={initialState}
+				setValues={setValues}
+				setGetMeals={setGetMeals}
+				values={values}/> 
 			<UserCheckList />
 		</>
-
 	);
 };
 
