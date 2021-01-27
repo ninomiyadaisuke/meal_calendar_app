@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { InputField, RemoveUser } from '../components/userList'
+import { InputField, RemoveUser } from '../components/UserList'
 import {getUsers, createUserList, removeUserList} from '../functions/userList';
 
 

@@ -4,14 +4,16 @@ const {
 	test,
 	createUserList,
 	allGetUserList,
-	updateUserList,
-	removeUserlist
+	removeUserlist,
+	incrementUser,
+	decrementUser
 } = require("../controllers/userList");
 
 router.get("/users/test", test);
 router.get("/users", allGetUserList);
 router.post("/userlist", createUserList);
-router.put('/update/user/:id', updateUserList)
+router.put('/increment/user/:id', incrementUser)
+router.put('/decrement/user/:id', decrementUser)
 router.delete('/user/delete/:id', removeUserlist)
 
 module.exports = router;
