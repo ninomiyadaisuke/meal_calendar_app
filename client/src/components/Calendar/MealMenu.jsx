@@ -33,7 +33,8 @@ const MealMenu = (props) => {
     setOpen(false);
   };
 
-  const updateButton = () => {
+  const updateButton = (id) => {
+    console.log(id);
     setOpen(false)
   }
 
@@ -98,7 +99,7 @@ const MealMenu = (props) => {
                   <TextField name="subMenu3" type="text" placeholder="副菜" onChange={onChange}/>
                 </div>           
                 <div>
-                  <button onClick={updateButton}>追加</button>
+                  <button onClick={() => updateButton(meal._id)}>追加</button>
                 </div>        
                 </div>
             </Fade>
