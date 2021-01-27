@@ -15,17 +15,6 @@ exports.getAllMeals = async (req, res) => {
 	res.json(list);
 };
 
-exports.getMeal = async (req, res) => {
-	try {
-		getMealId = await Meal.findOne({ _id: req.params.id })
-		res.json(getMealId)
-	} catch(err) {
-		console.log(err);
-res.status(400).json('Not Get Buylist')
-	}
-}
-
-
 exports.getMealByDate = async (req, res) => {
 
 	try {
@@ -42,12 +31,10 @@ exports.getMealByDate = async (req, res) => {
 
 exports.updateMeal = async (req, res) => {
 	try { 
-		const updateMeal = await Meal.findOneAndUpdate(
-			req.params.date ,
-			req.body, 
-			{ new: true })
-			.exec()
-		res.json(updateMeal)
+		const updateMeal = await Meal.findOne(
+			req.params.id).exec()
+		const meal = await updateMeal.update(req.body, { new: true }).exec()
+		res.json(meal)
 	} catch (err) {
 		console.log(err);
     res.status(400).json('Not Updated')

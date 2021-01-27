@@ -5,7 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { TextField } from "@material-ui/core"
-import { updateMeal } from "../../functions/meal"
+// import { updateMeal } from "../../functions/meal"
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const MealMenu = (props) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const { meals, values, setGetMeals,onChange } = props
+  const { meals, values, setGetMeals,onChange, } = props
 
   const handleOpen = () => {
     setOpen(true);
@@ -34,11 +34,13 @@ const MealMenu = (props) => {
     setOpen(false);
   };
 
-  const updateButton = (date) => {
-    console.log(date);
-    updateMeal(date)
-    setOpen(false)
-  }
+  // const updateButton = (id) => {
+  //   updateMeal(id, values).then(res => {
+  //     console.log(res.data);
+  //   })
+  //   setOpen(false)  
+  // }
+  //今後実装予定
 
   const deleteButton = (id) => {
     // console.log(id);
@@ -101,7 +103,8 @@ const MealMenu = (props) => {
                   <TextField name="subMenu3" type="text" placeholder="副菜" onChange={onChange}/>
                 </div>           
                 <div>
-                  <button onClick={() => updateButton(meal.date)}>追加</button>
+                  {/* <button onClick={() => updateButton(meal._id)}>追加</button> */}
+                  {/* 今後実装予定 */}
                 </div>        
                 </div>
             </Fade>

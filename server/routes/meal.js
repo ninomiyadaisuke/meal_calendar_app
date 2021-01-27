@@ -10,10 +10,9 @@ const {
 
 
 router.get("/meals", getAllMeals);
-router.get("/meal/:id", getMeal);
 router.get('/meal/date/:date', getMealByDate)
 router.post("/meal", createMeal);
-router.put("/mealedit/:date",updateMeal)
+router.put("/mealedit/:id",updateMeal)
 router.delete("/meal/:id", removeMeal);
 
 module.exports = router;

@@ -21,11 +21,8 @@ export const deleteMeals = async (id) => {
 	return deleteMeal
 }
 
-// export const updateMeal = async (date, values) => {
-// 	const updateMeal = await axios.put(`${BaseUrl}/mealedit/${date}`, values);
-// 	return updateMeal
-// };
-
-export const updateMeal =  (date) => {
-	console.log(date);
+export const updateMeal = async (id, values) => {
+	const updateMeal = await axios.put(`${BaseUrl}/mealedit/${id}`, values);
+	return updateMeal
 };
+
