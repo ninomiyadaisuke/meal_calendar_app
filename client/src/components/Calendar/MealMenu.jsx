@@ -4,8 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import InputMeal from './InputMeal';
-
+import { TextField } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -24,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const MealMenu = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const { meals, initialState, setValues, setGetMeals,onChange } = props
 
   const handleOpen = () => {
     setOpen(true);
@@ -33,12 +33,9 @@ const MealMenu = (props) => {
     setOpen(false);
   };
 
-  const { meals, initialState, setValues, setGetMeals } = props
-  const [anchorEl, setAnchorEl] = useState(null);
-  const handleClick = (e) => {
-      setAnchorEl(anchorEl ? null : e.currentTarget);
-  };
-  
+  const updateButton = () => {
+    setOpen(false)
+  }
 
   const deleteButton = (id) => {
     // console.log(id);
@@ -82,9 +79,29 @@ const MealMenu = (props) => {
             >
               <Fade in={open}>
                 <div className={classes.paper}>
-                  <InputMeal/>
+                <div>
+                  <TextField name="main" type="text" placeholder="メイン" onChange={onChange}/>
                 </div>
-              </Fade>
+                <div>
+                  <TextField name="rice" type="text" placeholder="ライス" onChange={onChange}/>
+                </div> 
+                <div>
+                  <TextField name="soup" type="text" placeholder="スープ" onChange={onChange}/>
+                </div> 
+                <div>
+                  <TextField name="subMenu1" type="text" placeholder="副菜" onChange={onChange}/>
+                </div>  
+                <div>
+                  <TextField name="subMenu2" type="text" placeholder="副菜" onChange={onChange}/>
+                </div>   
+                <div>
+                  <TextField name="subMenu3" type="text" placeholder="副菜" onChange={onChange}/>
+                </div>           
+                <div>
+                  <button onClick={updateButton}>追加</button>
+                </div>        
+                </div>
+            </Fade>
             </Modal>          
           <button onClick={() => { deleteButton(meal._id) }}>削除</button>
         </div>

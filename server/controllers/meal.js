@@ -17,7 +17,7 @@ exports.getAllMeals = async (req, res) => {
 
 exports.getMeal = async (req, res) => {
 	try {
-		getMealId = await Meal.findOne({ _id: req.params._id })
+		getMealId = await Meal.findOne({ _id: req.params.id })
 		res.json(getMealId)
 	} catch(err) {
 		console.log(err);
@@ -58,7 +58,7 @@ exports.getMealByDate = async (req, res) => {
 
 exports.removeMeal = async (req, res) => {
 	try { 
-		const removeMeal = await Meal.findOneAndDelete( req.params._id ).exec()
+		const removeMeal = await Meal.findOneAndDelete( req.params.id ).exec()
 		res.json(removeMeal)
 	} catch (err) {
 		console.log(err);
