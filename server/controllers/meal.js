@@ -50,9 +50,10 @@ exports.removeMeal = async (req, res) => {
 
 exports.addUser = async (req, res) => {
 	try {
-		const user = await Meal.findByIdAndUpdate(req.params.id, {
-			$addToSet: { users: req.body },
-		});
+		const user = await Meal.findByIdAndUpdate(
+			req.params.id,
+			{ $addToSet: { users: req.body } }
+		);
 		res.json(user);
 	} catch (err) {
 		console.error(err);
@@ -62,9 +63,9 @@ exports.addUser = async (req, res) => {
 
 exports.pullUser = async (req, res) => {
 	try {
-		const user = await Meal.findByIdAndUpdate(req.params.id, {
-			$pull: { users: req.body },
-		});
+		const user = await Meal.findByIdAndUpdate(
+			req.params.id,
+			{ $pull: { users: req.body, } },);
 		res.json(user);
 		console.log(user);
 	} catch (err) {
@@ -72,3 +73,4 @@ exports.pullUser = async (req, res) => {
 		res.status(400).json("Not added User");
 	}
 };
+

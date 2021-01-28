@@ -5,10 +5,6 @@ const userListSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	eating: {
-		type: Boolean,
-		default: true,
-	}
 });
 
 module.exports = mongoose.model("UserList", userListSchema);

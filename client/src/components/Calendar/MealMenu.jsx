@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deleteMeals, getAllMeals } from "../../functions/meal";
+import { deleteMeals, getAllMeals, pullToUser } from "../../functions/meal";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const MealMenu = (props) => {
 	const classes = useStyles();
 	const [open, setOpen] = useState(false);
-	const { meals, values, setGetMeals, onChange } = props;
+	const { callMeals, meals, setGetMeals, onChange } = props;
 
 	const handleOpen = () => {
 		setOpen(true);
@@ -33,6 +33,13 @@ const MealMenu = (props) => {
 	const handleClose = () => {
 		setOpen(false);
 	};
+
+	const pulledUser = (id, name) => {
+	pullToUser(id, name).then((res) => {
+		callMeals();
+		//console.log(res.data.users);
+	});
+};
 
 	// const updateButton = (id) => {
 	//   updateMeal(id, values).then(res => {
@@ -72,6 +79,15 @@ const MealMenu = (props) => {
 						<button type="button" onClick={handleOpen}>
 							編集
 						</button>
+						{meal.users && meal.users.map(user => (
+							<div>
+								<p>{user.name}</p>
+								<button onClick={() => pulledUser(meal._id, user.name)}>
+									食べない
+								</button>								
+							</div>
+							
+						))}
 						<Modal
 							aria-labelledby="transition-modal-title"
 							aria-describedby="transition-modal-description"
