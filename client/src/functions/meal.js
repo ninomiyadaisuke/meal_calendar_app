@@ -28,9 +28,9 @@ export const updateMeal = async (id, values) => {
 	return updateMeal;
 };
 
-export const addToUser = async (id, name) => {
+export const addToUser = async (id, name,eating) => {
 	console.log(id, name);
-	const user = await axios.put(`${BaseUrl}/meal/users/${id}`, { name });
+	const user = await axios.put(`${BaseUrl}/meal/users/${id}`, { name, eating }); 
 	return user;
 };
 
@@ -41,3 +41,5 @@ export const pullToUser = async (id, name) => {
 	});
 	return pullUser;
 };
+
+

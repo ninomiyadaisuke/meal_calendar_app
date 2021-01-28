@@ -6,6 +6,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 const CheckUserList = ({ meals, callMeals }) => {
 	const [userList, setUserList] = useState([]);
 	const [count, setCount] = useState(0);
+	
 
 	useEffect(() => {
 		loadUsers();
@@ -19,19 +20,18 @@ const CheckUserList = ({ meals, callMeals }) => {
 		});
 	};
 
+  
+
 	const addedUser = (id, name) => {
+		// console.log(eating);
 		addToUser(id, name).then((res) => {
+			// console.log(eating);
 			callMeals();
 			//console.log(res.data.users);
 		});
 	};
 
-	const pulledUser = (id, name) => {
-		pullToUser(id, name).then((res) => {
-			callMeals();
-			//console.log(res.data.users);
-		});
-	};
+
 
 	return (
 		<div>
@@ -48,9 +48,6 @@ const CheckUserList = ({ meals, callMeals }) => {
 						</p>
 						<button onClick={() => addedUser(meals[0]._id, user.name)}>
 							食べる
-						</button>
-						<button onClick={() => pulledUser(meals[0]._id, user.name)}>
-							食べない
 						</button>
 					</div>
 				</>

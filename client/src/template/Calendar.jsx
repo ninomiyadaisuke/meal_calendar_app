@@ -71,6 +71,7 @@ const Calendar = () => {
 				setValues={setValues}
 				setGetMeals={setGetMeals}
 				values={values}
+				callMeals={callMeals}  
 			/>
 			<CheckUserList meals={getMeals} callMeals={callMeals} />
 		</>
