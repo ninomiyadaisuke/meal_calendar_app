@@ -1,46 +1,63 @@
-import React, { useEffect, useState } from 'react'
-import { getUsers, updateUserList } from "../../functions/userList"
-import Checkbox from '@material-ui/core/Checkbox';
+import React, { useEffect, useState } from "react";
+import { getUsers } from "../../functions/userList";
+import { addToUser, pullToUser } from "../../functions/meal";
+import Checkbox from "@material-ui/core/Checkbox";
 
-const CheckUserList = (props) => {
-  const [userList, setUserList] = useState([])
-  const [checked, setChecked] = useState(true);
-  const [count, setCount] = useState(0)
+const CheckUserList = ({ meals, callMeals }) => {
+	const [userList, setUserList] = useState([]);
+	const [count, setCount] = useState(0);
 
+	useEffect(() => {
+		loadUsers();
+	}, []);
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-  };
+	const loadUsers = () => {
+		getUsers().then((res) => {
+			// console.log(res.data.length - 1);
+			setCount(res.data.length);
+			setUserList(res.data);
+		});
+	};
 
-  const loadUsers = () => {
-    getUsers().then(res => {
-      // console.log(res.data.length - 1); 
-      setCount(res.data.length)
-      setUserList(res.data)
-    })
-  }
+	const addedUser = (id, name) => {
+		addToUser(id, name).then((res) => {
+			callMeals();
+			//console.log(res.data.users);
+		});
+	};
 
-  useEffect(() => {
-    loadUsers()
-  },[])
-  return (
-    <div>
-      {userList.map((user) => (
-        <div key={user._id}>
-          <p>
-            <Checkbox
-              defaultChecked
-              color="primary"
-              inputProps={{ 'aria-label': 'secondary checkbox' }}
-            />
-            {user.name}
-          </p>
-          <button onClick={()=> updateUserList(user._id)}>更新</button>
-        </div>
-      ))}
-      <p>{count}</p>
-    </div>
-  )
-}
+	const pulledUser = (id, name) => {
+		pullToUser(id, name).then((res) => {
+			callMeals();
+			//console.log(res.data.users);
+		});
+	};
 
-export default CheckUserList
+	return (
+		<div>
+			{userList.map((user) => (
+				<>
+					<div key={user._id}>
+						<p>
+							<Checkbox
+								defaultChecked
+								color="primary"
+								inputProps={{ "aria-label": "secondary checkbox" }}
+							/>
+							{user.name}
+						</p>
+						<button onClick={() => addedUser(meals[0]._id, user.name)}>
+							食べる
+						</button>
+						<button onClick={() => pulledUser(meals[0]._id, user.name)}>
+							食べない
+						</button>
+					</div>
+				</>
+			))}
+			<p>{count}</p>
+		</div>
+	);
+};
+
+export default CheckUserList;

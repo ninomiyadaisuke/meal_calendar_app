@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const mealSchema = new mongoose.Schema({
 	date: {
 		type: String,
-		required: true,	
+		required: true,
 	},
 	main: {
 		type: String,
@@ -14,11 +14,11 @@ const mealSchema = new mongoose.Schema({
 	soup: String,
 	subMenu1: String,
 	subMenu2: String,
-	subMenu3: String
-	// users: {
-	// 	type: ObjectId,
-	// 	ref: "UserList",
-	// },
+	subMenu3: String,
+	users: {
+		type: Array,
+		default: [],
+	},
 });
 
 module.exports = mongoose.model("Meal", mealSchema);
