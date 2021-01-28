@@ -4,7 +4,6 @@ import {
 	DatePicker,
 	InputMeal,
 	MealMenu,
-	UserCheckList,
 } from "../components/Calendar";
 import { createMeal, getMealDate } from "../functions/meal";
 import { dateChange } from "../functions/formatValue";
@@ -73,7 +72,6 @@ const Calendar = () => {
 				setGetMeals={setGetMeals}
 				values={values}
 			/>
-			<UserCheckList date={selectedDate} />
 			<CheckUserList meals={getMeals} callMeals={callMeals} />
 		</>
 	);
