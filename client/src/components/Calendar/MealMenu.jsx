@@ -1,11 +1,17 @@
 import React, { useState } from "react";
-import { deleteMeals, getAllMeals, pullToUser } from "../../functions/meal";
+import {
+	deleteMeals,
+	getAllMeals,
+	pullToUser,
+	washUser,
+	pullWashUser,
+} from "../../functions/meal";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import { TextField } from "@material-ui/core";
-// import { updateMeal } from "../../functions/meal"
+import Chip from "@material-ui/core/Chip";
 
 const useStyles = makeStyles((theme) => ({
 	modal: {
@@ -18,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
 		border: "2px solid #000",
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing(2, 4, 3),
+	},
+	typography: {
+		padding: theme.spacing(2),
 	},
 }));
 
@@ -35,19 +44,30 @@ const MealMenu = (props) => {
 	};
 
 	const pulledUser = (id, name) => {
-	pullToUser(id, name).then((res) => {
-		callMeals();
-		//console.log(res.data.users);
-	});
-};
+		if (window.confirm("食べないに変更しますか？")) {
+			pullToUser(id, name).then((res) => {
+				callMeals();
+			});
+		}
+	};
 
-	// const updateButton = (id) => {
-	//   updateMeal(id, values).then(res => {
-	//     console.log(res.data);
-	//   })
-	//   setOpen(false)
-	// }
-	//今後実装予定
+	const cleanDish = (id, name) => {
+		if (window.confirm(`${name}さんを当番に追加しますか？`)) {
+			washUser(id, name).then((res) => {
+				alert(`${name}さんを当番に追加しました。`);
+				callMeals();
+			});
+		}
+	};
+
+	const pullDishWashing = (id, name) => {
+		if (window.confirm(`${name}さんを当番から外しますか？`)) {
+			pullWashUser(id, name).then((res) => {
+				alert(`${name}さんを当番から外しました。`);
+				callMeals();
+			});
+		}
+	};
 
 	const deleteButton = (id) => {
 		// console.log(id);
@@ -79,15 +99,47 @@ const MealMenu = (props) => {
 						<button type="button" onClick={handleOpen}>
 							編集
 						</button>
-						{meal.users && meal.users.map(user => (
-							<div>
-								<p>{user.name}</p>
-								<button onClick={() => pulledUser(meal._id, user.name)}>
-									食べない
-								</button>								
-							</div>
-							
+						<button
+							onClick={() => {
+								deleteButton(meal._id);
+							}}>
+							削除
+						</button>
+						<br />
+						<h3>本日の喫食者</h3>
+						{meal.users &&
+							meal.users.map((user) => (
+								<React.Fragment key={user.name}>
+									<Chip
+										label={user.name}
+										clickable
+										color="secondary"
+										variant="outlined"
+									/>
+									<div className={classes.typography}>
+										<p>{`${user.name}さんのメニュー`}</p>
+										<button onClick={() => pulledUser(meal._id, user.name)}>
+											食べないに変更
+										</button>
+										<button onClick={() => cleanDish(meal._id, user.name)}>
+											食器洗い当番に追加
+										</button>
+									</div>
+								</React.Fragment>
+							))}
+						<h3>当番</h3>
+						{meal.dishWashing.map((u) => (
+							<Chip
+								key={u.name}
+								label={u.name}
+								clickable
+								color="secondary"
+								variant="outlined"
+								onClick={() => pullDishWashing(meal._id, u.name)}
+							/>
 						))}
+						<h3>従業員一覧</h3>
+						<p>{meal.date}の昼食は食べますか？</p>
 						<Modal
 							aria-labelledby="transition-modal-title"
 							aria-describedby="transition-modal-description"
@@ -156,12 +208,6 @@ const MealMenu = (props) => {
 								</div>
 							</Fade>
 						</Modal>
-						<button
-							onClick={() => {
-								deleteButton(meal._id);
-							}}>
-							削除
-						</button>
 					</div>
 				))
 			) : (

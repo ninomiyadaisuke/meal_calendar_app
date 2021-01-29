@@ -31,7 +31,7 @@ const Calendar = () => {
 
 	const ChangeMain = (e) => {
 		setValues({ ...values, [e.target.name]: e.target.value });
-		console.log(e.target.name, "----", e.target.value);
+		//console.log(e.target.name, "----", e.target.value);
 	};
 
 	const callMeals = () => {
@@ -43,9 +43,9 @@ const Calendar = () => {
 	const ClickMeal = () => {
 		const date = selectedDate;
 		const dateValues = { date, ...values };
-		console.log(dateValues);
+		//console.log(dateValues);
 		createMeal(dateValues).then((res) => {
-			console.log(values);
+			//console.log(values);
 			alert(`メニューをを追加しました`);
 			callMeals();
 			setValues(initialState);
@@ -71,7 +71,7 @@ const Calendar = () => {
 				setValues={setValues}
 				setGetMeals={setGetMeals}
 				values={values}
-				callMeals={callMeals}  
+				callMeals={callMeals}
 			/>
 			<CheckUserList meals={getMeals} callMeals={callMeals} />
 		</>

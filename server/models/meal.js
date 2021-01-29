@@ -19,6 +19,10 @@ const mealSchema = new mongoose.Schema({
 		type: Array,
 		default: [],
 	},
+	dishWashing: {
+		type: Array,
+		default: [],
+	},
 });
 
 module.exports = mongoose.model("Meal", mealSchema);

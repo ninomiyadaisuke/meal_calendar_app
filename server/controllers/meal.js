@@ -50,10 +50,9 @@ exports.removeMeal = async (req, res) => {
 
 exports.addUser = async (req, res) => {
 	try {
-		const user = await Meal.findByIdAndUpdate(
-			req.params.id,
-			{ $addToSet: { users: req.body } }
-		);
+		const user = await Meal.findByIdAndUpdate(req.params.id, {
+			$addToSet: { users: req.body },
+		});
 		res.json(user);
 	} catch (err) {
 		console.error(err);
@@ -63,9 +62,9 @@ exports.addUser = async (req, res) => {
 
 exports.pullUser = async (req, res) => {
 	try {
-		const user = await Meal.findByIdAndUpdate(
-			req.params.id,
-			{ $pull: { users: req.body, } },);
+		const user = await Meal.findByIdAndUpdate(req.params.id, {
+			$pull: { users: req.body },
+		});
 		res.json(user);
 		console.log(user);
 	} catch (err) {
@@ -74,3 +73,27 @@ exports.pullUser = async (req, res) => {
 	}
 };
 
+exports.dishUser = async (req, res) => {
+	try {
+		const user = await Meal.findByIdAndUpdate(req.params.id, {
+			$addToSet: { dishWashing: req.body },
+		});
+		res.json(user);
+	} catch (err) {
+		console.error(err);
+		res.status(400).json("Not add dish User");
+	}
+};
+
+exports.pullDishUser = async (req, res) => {
+	try {
+		const user = await Meal.findByIdAndUpdate(req.params.id, {
+			$pull: { dishWashing: req.body },
+		});
+		res.json(user);
+		console.log(user);
+	} catch (err) {
+		console.error(err);
+		res.status(400).json("Not pull Dish User");
+	}
+};

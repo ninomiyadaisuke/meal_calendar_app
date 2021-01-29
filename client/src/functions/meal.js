@@ -28,18 +28,32 @@ export const updateMeal = async (id, values) => {
 	return updateMeal;
 };
 
-export const addToUser = async (id, name,eating) => {
-	console.log(id, name);
-	const user = await axios.put(`${BaseUrl}/meal/users/${id}`, { name, eating }); 
+export const addToUser = async (id, name, eating) => {
+	//console.log(id, name);
+	const user = await axios.put(`${BaseUrl}/meal/users/${id}`, { name, eating });
 	return user;
 };
 
 export const pullToUser = async (id, name) => {
-	console.log(id, name);
+	//console.log(id, name);
 	const pullUser = await axios.put(`${BaseUrl}/meal/pull-users/${id}`, {
 		name,
 	});
 	return pullUser;
 };
 
+export const washUser = async (id, name) => {
+	//console.log(id, name);
+	const user = await axios.put(`${BaseUrl}/meal/dish/users/${id}`, {
+		name,
+	});
+	return user;
+};
 
+export const pullWashUser = async (id, name) => {
+	//console.log(id, name);
+	const pullUser = await axios.put(`${BaseUrl}/meal/undish/users/${id}`, {
+		name,
+	});
+	return pullUser;
+};
