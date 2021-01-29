@@ -5,7 +5,6 @@ import Chip from "@material-ui/core/Chip";
 
 const CheckUserList = ({ meals, callMeals }) => {
 	const [userList, setUserList] = useState([]);
-	const [count, setCount] = useState(0);
 
 	useEffect(() => {
 		loadUsers();
@@ -14,7 +13,6 @@ const CheckUserList = ({ meals, callMeals }) => {
 	const loadUsers = () => {
 		getUsers().then((res) => {
 			// console.log(res.data.length - 1);
-			setCount(res.data.length);
 			setUserList(res.data);
 		});
 	};
@@ -31,19 +29,20 @@ const CheckUserList = ({ meals, callMeals }) => {
 
 	return (
 		<div>
-			{userList.map((user) => (
-				<>
-					<Chip
-						key={user._id}
-						label={`${user.name}(今日は食べる)`}
-						clickable
-						color="primary"
-						variant="outlined"
-						onClick={() => addedUser(meals[0]._id, user.name)}
-					/>
-				</>
-			))}
-			<p>{count}</p>
+			{meals.length > 0
+				? userList.map((user) => (
+						<>
+							<Chip
+								key={user._id}
+								label={`${user.name}(今日は食べる)`}
+								clickable
+								color="primary"
+								variant="outlined"
+								onClick={() => addedUser(meals[0]._id, user.name)}
+							/>
+						</>
+				  ))
+				: ""}
 		</div>
 	);
 };
