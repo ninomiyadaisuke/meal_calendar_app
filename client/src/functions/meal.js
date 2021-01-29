@@ -1,9 +1,22 @@
 import axios from "axios";
 import { BaseUrl } from "../config";
 
-export const createMeal = async (dateValues) => {
-	const meal = await axios.post(`${BaseUrl}/meal`, dateValues);
+export const createMeal = async (date) => {
+	const meal = await axios.post(`${BaseUrl}/meal`, { date });
 	return meal;
+};
+
+export const createMenu = async (id, menu) => {
+	//console.log(date, menu);
+	const menus = await axios.put(`${BaseUrl}/meal/menu/${id}`, { menu });
+	return menus;
+};
+
+export const deleteMenus = async (id, menu) => {
+	const deleteMenu = await axios.put(`${BaseUrl}/meal/menu/pull/${id}`, {
+		menu,
+	});
+	return deleteMenu;
 };
 
 export const getMealDate = async (selectedDate) => {
@@ -16,11 +29,6 @@ export const getMealDate = async (selectedDate) => {
 export const getAllMeals = async () => {
 	const meals = await axios.get(`${BaseUrl}/meals`);
 	return meals;
-};
-
-export const deleteMeals = async (id) => {
-	const deleteMeal = await axios.delete(`${BaseUrl}/meal/${id}`);
-	return deleteMeal;
 };
 
 export const updateMeal = async (id, values) => {

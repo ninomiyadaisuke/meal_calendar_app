@@ -1,15 +1,5 @@
 const Meal = require("../models/meal");
 
-exports.createMeal = async (req, res) => {
-	try {
-		const newMeal = await new Meal(req.body).save();
-		res.json(newMeal);
-	} catch (err) {
-		console.error(err);
-		res.status(400).send("Not Create BuyList");
-	}
-};
-
 exports.getAllMeals = async (req, res) => {
 	const list = await Meal.find({}).exec();
 	res.json(list);
@@ -27,24 +17,38 @@ exports.getMealByDate = async (req, res) => {
 	}
 };
 
-exports.updateMeal = async (req, res) => {
+exports.createMeal = async (req, res) => {
 	try {
-		const updateMeal = await Meal.findOne(req.params.id).exec();
-		const meal = await updateMeal.update(req.body, { new: true }).exec();
-		res.json(meal);
+		const newMeal = await new Meal(req.body).save();
+		res.json(newMeal);
 	} catch (err) {
-		console.log(err);
-		res.status(400).json("Not Updated");
+		console.error(err);
+		res.status(400).send("Not Create BuyList");
 	}
 };
 
-exports.removeMeal = async (req, res) => {
+exports.addMenu = async (req, res) => {
 	try {
-		const removeMeal = await Meal.findOneAndDelete(req.params.id).exec();
-		res.json(removeMeal);
+		const menu = await Meal.findByIdAndUpdate(req.params.id, {
+			$addToSet: { menus: req.body },
+		});
+		res.json(menu);
 	} catch (err) {
-		console.log(err);
-		res.status(400).json("Not Deleted");
+		console.error(err);
+		res.status(400).json("Not added User");
+	}
+};
+
+exports.removeMenu = async (req, res) => {
+	try {
+		const user = await Meal.findByIdAndUpdate(req.params.id, {
+			$pull: { menus: req.body },
+		});
+		res.json(user);
+		console.log(user);
+	} catch (err) {
+		console.error(err);
+		res.status(400).json("Not pull Dish User");
 	}
 };
 

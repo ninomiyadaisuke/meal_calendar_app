@@ -5,52 +5,50 @@ import {
 	InputMeal,
 	MealMenu,
 } from "../components/Calendar";
-import { createMeal, getMealDate } from "../functions/meal";
+import { createMeal, getMealDate, createMenu } from "../functions/meal";
 import { dateChange } from "../functions/formatValue";
 
 const Calendar = () => {
-	const initialState = {
-		main: "",
-		rice: "",
-		soup: "",
-		subMenu1: "",
-		subMenu2: "",
-		subMenu3: "",
-	};
-
 	const initialDate = dateChange(new Date());
-	const [values, setValues] = useState(initialState);
 	const [selectedDate, setSelectedDate] = useState(initialDate);
 	const [getMeals, setGetMeals] = useState([]);
+	const [menu, setMenu] = useState("");
 
 	const handleDateChange = (date) => {
 		const newDate = dateChange(date);
 		setSelectedDate(newDate);
-		console.log(newDate);
+		//console.log(newDate);
 	};
 
-	const ChangeMain = (e) => {
-		setValues({ ...values, [e.target.name]: e.target.value });
-		//console.log(e.target.name, "----", e.target.value);
+	const handleMenuChange = (e) => {
+		setMenu(e.target.value);
+		//console.log(menu);
+	};
+
+	const addMenu = () => {
+		const id = getMeals[0]._id;
+		//console.log(menuId);
+		createMenu(id, menu).then((res) => {
+			//console.log(res.data);
+			callMeals();
+			setMenu("");
+		});
 	};
 
 	const callMeals = () => {
 		getMealDate(selectedDate).then((res) => {
 			setGetMeals(res.data);
+			//setMealDayId(res.data[0]._id);
 		});
 	};
 
 	const ClickMeal = () => {
 		const date = selectedDate;
-		const dateValues = { date, ...values };
-		//console.log(dateValues);
-		createMeal(dateValues).then((res) => {
-			//console.log(values);
+		//console.log(date);
+		createMeal(date).then((res) => {
+			//console.log(res);
 			alert(`メニューをを追加しました`);
 			callMeals();
-			setValues(initialState);
-			setSelectedDate(initialDate);
-			window.location.reload();
 		});
 	};
 
@@ -64,14 +62,22 @@ const Calendar = () => {
 				handleDateChange={handleDateChange}
 				selectedDate={selectedDate}
 			/>
-			<InputMeal main={values} onChange={ChangeMain} click={ClickMeal} />
+			{getMeals.length > 0 ? (
+				""
+			) : (
+				<button onClick={ClickMeal}>メニューを作成</button>
+			)}
+			<InputMeal
+				menu={menu}
+				meals={getMeals}
+				onChange={handleMenuChange}
+				click={addMenu}
+			/>
 			<MealMenu
 				meals={getMeals}
-				initialState={initialState}
-				setValues={setValues}
 				setGetMeals={setGetMeals}
-				values={values}
 				callMeals={callMeals}
+				menu={menu}
 			/>
 			<CheckUserList meals={getMeals} callMeals={callMeals} />
 		</>

@@ -1,16 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-	deleteMeals,
-	getAllMeals,
+	deleteMenus,
 	pullToUser,
 	washUser,
 	pullWashUser,
 } from "../../functions/meal";
 import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
-import { TextField } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,16 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MealMenu = (props) => {
 	const classes = useStyles();
-	const [open, setOpen] = useState(false);
-	const { callMeals, meals, setGetMeals, onChange } = props;
-
-	const handleOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
+	const { callMeals, meals, setGetMeals } = props;
 
 	const pulledUser = (id, name) => {
 		if (window.confirm("食べないに変更しますか？")) {
@@ -69,17 +55,13 @@ const MealMenu = (props) => {
 		}
 	};
 
-	const deleteButton = (id) => {
-		// console.log(id);
+	const deleteButton = (id, menu) => {
+		//console.log(id, menu);
 		if (window.confirm("本当に削除しますか？")) {
-			deleteMeals(id).then((res) => {
-				getAllMeals().then((res) => {
-					setGetMeals(res);
-					window.location.reload();
-				});
+			deleteMenus(id, menu).then((res) => {
+				//console.log(res.data);
+				callMeals();
 			});
-		} else {
-			return false;
 		}
 	};
 
@@ -88,26 +70,34 @@ const MealMenu = (props) => {
 			{meals.length > 0 ? (
 				meals.map((meal) => (
 					<div key={meal._id}>
-						<p>{meal.date}</p>
-						<p>{meal.main}</p>
-						<p>{meal.rice}</p>
-						<p>{meal.soup}</p>
-						<p>{meal.subMenu1}</p>
-						<p>{meal.subMenu2}</p>
-						<p>{meal.subMenu3}</p>
-						<p>{meal.users.length}人</p>
-						<button type="button" onClick={handleOpen}>
-							編集
-						</button>
-						<button
-							onClick={() => {
-								deleteButton(meal._id);
-							}}>
-							削除
-						</button>
+						<h2>本日のメニュー</h2>
+						<ul>
+							{meal.menus.length === 0 ? (
+								<p>現在メニューは作成されていません。</p>
+							) : (
+								meal.menus.map((m) => (
+									<li key={m.menu}>
+										{m.menu}
+										<span>
+											<button onClick={() => deleteButton(meal._id, m.menu)}>
+												削除
+											</button>
+										</span>
+									</li>
+								))
+							)}
+						</ul>
 						<br />
+						{meal.users.length === 0 ? (
+							""
+						) : (
+							<p>{meal.users.length}人が喫食予定です。</p>
+						)}
+
 						<h3>本日の喫食者</h3>
-						{meal.users &&
+						{meal.users.length === 0 ? (
+							<p>本日の喫食者はいません。</p>
+						) : (
 							meal.users.map((user) => (
 								<React.Fragment key={user.name}>
 									<Chip
@@ -126,88 +116,25 @@ const MealMenu = (props) => {
 										</button>
 									</div>
 								</React.Fragment>
-							))}
+							))
+						)}
 						<h3>当番</h3>
-						{meal.dishWashing.map((u) => (
-							<Chip
-								key={u.name}
-								label={u.name}
-								clickable
-								color="secondary"
-								variant="outlined"
-								onClick={() => pullDishWashing(meal._id, u.name)}
-							/>
-						))}
+						{meal.dishWashing.length === 0 ? (
+							<p>現在の当番はいません。</p>
+						) : (
+							meal.dishWashing.map((u) => (
+								<Chip
+									key={u.name}
+									label={u.name}
+									clickable
+									color="secondary"
+									variant="outlined"
+									onClick={() => pullDishWashing(meal._id, u.name)}
+								/>
+							))
+						)}
 						<h3>従業員一覧</h3>
 						<p>{meal.date}の昼食は食べますか？</p>
-						<Modal
-							aria-labelledby="transition-modal-title"
-							aria-describedby="transition-modal-description"
-							className={classes.modal}
-							open={open}
-							onClose={handleClose}
-							closeAfterTransition
-							BackdropComponent={Backdrop}
-							BackdropProps={{
-								timeout: 500,
-							}}>
-							<Fade in={open}>
-								<div className={classes.paper}>
-									<div>
-										<TextField
-											name="main"
-											type="text"
-											placeholder="メイン"
-											onChange={onChange}
-										/>
-									</div>
-									<div>
-										<TextField
-											name="rice"
-											type="text"
-											placeholder="ライス"
-											onChange={onChange}
-										/>
-									</div>
-									<div>
-										<TextField
-											name="soup"
-											type="text"
-											placeholder="スープ"
-											onChange={onChange}
-										/>
-									</div>
-									<div>
-										<TextField
-											name="subMenu1"
-											type="text"
-											placeholder="副菜"
-											onChange={onChange}
-										/>
-									</div>
-									<div>
-										<TextField
-											name="subMenu2"
-											type="text"
-											placeholder="副菜"
-											onChange={onChange}
-										/>
-									</div>
-									<div>
-										<TextField
-											name="subMenu3"
-											type="text"
-											placeholder="副菜"
-											onChange={onChange}
-										/>
-									</div>
-									<div>
-										{/* <button onClick={() => updateButton(meal._id)}>追加</button> */}
-										{/* 今後実装予定 */}
-									</div>
-								</div>
-							</Fade>
-						</Modal>
 					</div>
 				))
 			) : (
