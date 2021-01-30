@@ -3,7 +3,7 @@ import { getUsers } from "../../functions/userList";
 import { addToUser } from "../../functions/meal";
 import Chip from "@material-ui/core/Chip";
 
-const CheckUserList = ({ meals, callMeals }) => {
+const CheckUserList = ({ meals, callMeals, japanDate }) => {
 	const [userList, setUserList] = useState([]);
 
 	useEffect(() => {
@@ -29,18 +29,26 @@ const CheckUserList = ({ meals, callMeals }) => {
 
 	return (
 		<div>
+			{meals.length > 0 ? (
+				<>
+					<h3>従業員一覧</h3>
+					<p>{japanDate}の昼食は食べますか？</p>
+				</>
+			) : (
+				""
+			)}
+
 			{meals.length > 0
 				? userList.map((user) => (
-						<>
+						<React.Fragment key={user._id}>
 							<Chip
-								key={user._id}
 								label={`${user.name}(今日は食べる)`}
 								clickable
-								color="primary"
-								variant="outlined"
+								color="default"
+								variant="default"
 								onClick={() => addedUser(meals[0]._id, user.name)}
 							/>
-						</>
+						</React.Fragment>
 				  ))
 				: ""}
 		</div>
