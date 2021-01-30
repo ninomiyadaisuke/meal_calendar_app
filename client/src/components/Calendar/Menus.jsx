@@ -24,29 +24,35 @@ const Menus = (props) => {
 	const classes = useStyles();
 	return (
 		<Grid item xs={12} md={6}>
-			<h2>本日のメニュー</h2>
+			<Grid container justify="center">
+				<h2>本日のメニュー</h2>
+			</Grid>
 			{meal.menus.length === 0 ? (
-				<p>現在メニューまだ作成されていません。</p>
+				<Grid container justify="center">
+					<p>現在メニューまだ作成されていません。</p>
+				</Grid>
 			) : (
-				<Grid item xs={12} md={6}>
-					<div>
-						<List>
-							{meal.menus.map((m) => (
-								<ListItem key={m.menu} className={classes.text}>
-									<ListItemIcon>
-										<LocalDiningIcon />
-									</ListItemIcon>
-									<ListItemText primary={m.menu} />
-									<IconButton
-										edge="end"
-										aria-label="delete"
-										onClick={() => deleteButton(meal._id, m.menu)}>
-										<DeleteForeverIcon className={classes.icons} />
-									</IconButton>
-								</ListItem>
-							))}
-						</List>
-					</div>
+				<Grid container justify="center">
+					<Grid item xs={12} sm={6}>
+						<div>
+							<List>
+								{meal.menus.map((m) => (
+									<ListItem key={m.menu} className={classes.text}>
+										<ListItemIcon>
+											<LocalDiningIcon />
+										</ListItemIcon>
+										<ListItemText primary={m.menu} />
+										<IconButton
+											edge="end"
+											aria-label="delete"
+											onClick={() => deleteButton(meal._id, m.menu)}>
+											<DeleteForeverIcon className={classes.icons} />
+										</IconButton>
+									</ListItem>
+								))}
+							</List>
+						</div>
+					</Grid>
 				</Grid>
 			)}
 		</Grid>

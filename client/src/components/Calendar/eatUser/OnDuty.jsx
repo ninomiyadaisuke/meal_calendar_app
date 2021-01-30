@@ -5,6 +5,7 @@ const OnDuty = (props) => {
 	const { user, pullDishWashing, meal } = props;
 	return (
 		<Chip
+			style={{ marginRight: "3px", marginBottom: "5px" }}
 			label={user.name}
 			clickable
 			color="secondary"

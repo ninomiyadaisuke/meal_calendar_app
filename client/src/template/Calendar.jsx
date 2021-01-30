@@ -87,7 +87,6 @@ const Calendar = () => {
 					</Fab>
 				</Grid>
 			)}
-			<Grid container justify="center"></Grid>
 			<MealMenu
 				meals={getMeals}
 				setGetMeals={setGetMeals}

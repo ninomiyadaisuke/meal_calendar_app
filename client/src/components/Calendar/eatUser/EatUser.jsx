@@ -12,6 +12,7 @@ const EatUser = (props) => {
 					<PersonAddIcon onClick={() => cleanDish(meal._id, user.name)} />
 				</Tooltip>
 			}
+			style={{ marginRight: "3px", marginBottom: "5px" }}
 			onDelete={() => pulledUser(meal._id, user.name)}
 			label={user.name}
 			clickable

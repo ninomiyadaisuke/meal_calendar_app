@@ -27,6 +27,18 @@ exports.createMeal = async (req, res) => {
 	}
 };
 
+exports.deleteMeal = async (req, res) => {
+	try {
+		const removeMeal = await Meal.findByIdAndDelete(req.params.id)
+			.select("_id")
+			.exec();
+		res.json(removeMeal);
+	} catch (err) {
+		console.log(err);
+		res.status(400).json("Not Deleted");
+	}
+};
+
 exports.addMenu = async (req, res) => {
 	try {
 		const menu = await Meal.findByIdAndUpdate(req.params.id, {

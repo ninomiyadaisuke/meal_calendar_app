@@ -6,6 +6,11 @@ export const createMeal = async (date) => {
 	return meal;
 };
 
+export const removeMeal = async (id) => {
+	const deleteMeal = await axios.delete(`${ BaseUrl }/meal/${ id }`)
+	return deleteMeal
+}
+
 export const createMenu = async (id, menu) => {
 	//console.log(date, menu);
 	const menus = await axios.put(`${BaseUrl}/meal/menu/${id}`, { menu });

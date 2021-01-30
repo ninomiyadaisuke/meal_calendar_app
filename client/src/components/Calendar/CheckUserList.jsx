@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getUsers } from "../../functions/userList";
 import { addToUser } from "../../functions/meal";
 import Chip from "@material-ui/core/Chip";
+import Grid from "@material-ui/core/Grid";
 
 const CheckUserList = ({ meals, callMeals, japanDate }) => {
 	const [userList, setUserList] = useState([]);
@@ -31,17 +32,21 @@ const CheckUserList = ({ meals, callMeals, japanDate }) => {
 		<div>
 			{meals.length > 0 ? (
 				<>
-					<h3>従業員一覧</h3>
-					<p>{japanDate}の昼食は食べますか？</p>
+					<Grid container justify="center">
+						<h3>従業員一覧</h3>
+					</Grid>
+					<Grid container justify="center">
+						<p>{japanDate}の昼食は食べますか？</p>
+					</Grid>
 				</>
 			) : (
 				""
 			)}
-
 			{meals.length > 0
 				? userList.map((user) => (
 						<React.Fragment key={user._id}>
 							<Chip
+								style={{ marginRight: "3px", marginBottom: "5px" }}
 								label={`${user.name}(今日は食べる)`}
 								clickable
 								color="default"

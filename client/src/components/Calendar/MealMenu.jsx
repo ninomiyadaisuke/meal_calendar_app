@@ -4,10 +4,12 @@ import {
 	pullToUser,
 	washUser,
 	pullWashUser,
+	removeMeal,
 } from "../../functions/meal";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { Menus, Eaters } from "./index";
+import Button from "@material-ui/core/Button";
 
 const MealMenu = (props) => {
 	const { callMeals, meals, japaneseDate } = props;
@@ -48,19 +50,37 @@ const MealMenu = (props) => {
 		}
 	};
 
+	const deleteMeal = (id) => {
+		if (window.confirm(`${japaneseDate}のまかないをお休みに変更しますか？`)) {
+			removeMeal(id).then((res) => {
+				callMeals();
+			});
+		}
+	};
+
 	return (
 		<div>
 			{meals.length > 0 ? (
 				meals.map((meal) => (
-					<Grid key={meal._id} container justify="center">
-						<Menus meal={meal} deleteButton={deleteButton} />
-						<Eaters
-							meal={meal}
-							cleanDish={cleanDish}
-							pulledUser={pulledUser}
-							pullDishWashing={pullDishWashing}
-						/>
-					</Grid>
+					<React.Fragment key={meal._id}>
+						<Grid container justify="center">
+							<Button
+								style={{ margin: "0 auto" }}
+								onClick={() => deleteMeal(meal._id)}
+								color="secondary">
+								まかないをお休みに変更
+							</Button>
+						</Grid>
+						<Grid container justify="center">
+							<Menus meal={meal} deleteButton={deleteButton} />
+							<Eaters
+								meal={meal}
+								cleanDish={cleanDish}
+								pulledUser={pulledUser}
+								pullDishWashing={pullDishWashing}
+							/>
+						</Grid>
+					</React.Fragment>
 				))
 			) : (
 				<Grid container justify="center">

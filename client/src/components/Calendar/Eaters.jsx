@@ -6,9 +6,14 @@ const Eaters = (props) => {
 	const { meal, cleanDish, pullDishWashing, pulledUser } = props;
 	return (
 		<Grid item xs={12} md={6}>
-			<h3>本日の喫食者</h3>
+			<Grid container justify="center">
+				<h3>本日の喫食者</h3>
+			</Grid>
+
 			{meal.users.length === 0 ? (
-				<p>本日の喫食者はいません。</p>
+				<Grid container justify="center">
+					<p>本日の喫食者はいません。</p>
+				</Grid>
 			) : (
 				meal.users.map((user) => (
 					<EatUser
@@ -23,14 +28,21 @@ const Eaters = (props) => {
 			{meal.users.length === 0 ? (
 				""
 			) : (
-				<h3>
-					<span style={{ color: "red" }}>{meal.users.length}</span>
-					人が喫食予定です。
-				</h3>
+				<Grid container justify="center">
+					<h3>
+						<span style={{ color: "red" }}>{meal.users.length}</span>
+						人が喫食予定です。
+					</h3>
+				</Grid>
 			)}
-			<h3>当番</h3>
+			<Grid container justify="center">
+				<h3>当番</h3>
+			</Grid>
+
 			{meal.dishWashing.length === 0 ? (
-				<p>現在の当番はいません。</p>
+				<Grid container justify="center">
+					<p>現在の当番はいません。</p>
+				</Grid>
 			) : (
 				meal.dishWashing.map((u) => (
 					<OnDuty
