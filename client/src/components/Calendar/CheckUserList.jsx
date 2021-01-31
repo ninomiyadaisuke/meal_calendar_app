@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import { getUsers } from "../../functions/userList";
 import { addToUser } from "../../functions/meal";
 import Chip from "@material-ui/core/Chip";
+import Grid from "@material-ui/core/Grid";
+import DoneIcon from "@material-ui/icons/Done";
+import { HiOutlineEmojiHappy } from "react-icons/hi";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
 
-const CheckUserList = ({ meals, callMeals }) => {
+const CheckUserList = ({ meals, callMeals, japanDate }) => {
 	const [userList, setUserList] = useState([]);
 
 	useEffect(() => {
@@ -29,18 +34,39 @@ const CheckUserList = ({ meals, callMeals }) => {
 
 	return (
 		<div>
+			{meals.length > 0 ? (
+				<>
+					<Grid container justify="center">
+						<Typography variant="h5" style={{ marginTop: "30px" }}>
+							Member list
+						</Typography>
+					</Grid>
+					<Grid container justify="center">
+						<p>{japanDate}の昼食は食べますか？</p>
+					</Grid>
+				</>
+			) : (
+				""
+			)}
 			{meals.length > 0
 				? userList.map((user) => (
-						<>
+						<Tooltip title="食べるに追加" key={user._id}>
 							<Chip
-								key={user._id}
-								label={`${user.name}(今日は食べる)`}
+								style={{ marginRight: "3px", marginBottom: "5px" }}
+								icon={
+									<HiOutlineEmojiHappy
+										style={{ width: "20px", height: "20px" }}
+									/>
+								}
+								label={user.name}
+								onDelete={() => addedUser(meals[0]._id, user.name)}
+								deleteIcon={<DoneIcon />}
 								clickable
-								color="primary"
-								variant="outlined"
+								color="default"
+								variant="default"
 								onClick={() => addedUser(meals[0]._id, user.name)}
 							/>
-						</>
+						</Tooltip>
 				  ))
 				: ""}
 		</div>

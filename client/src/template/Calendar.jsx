@@ -6,17 +6,26 @@ import {
 	MealMenu,
 } from "../components/Calendar";
 import { createMeal, getMealDate, createMenu } from "../functions/meal";
-import { dateChange } from "../functions/formatValue";
+import { dateChange, japaneseDateChange } from "../functions/formatValue";
+import Fab from "@material-ui/core/Fab";
+import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
+import { toast } from "react-toastify";
 
 const Calendar = () => {
 	const initialDate = dateChange(new Date());
+	const japanDate = japaneseDateChange(new Date());
 	const [selectedDate, setSelectedDate] = useState(initialDate);
+	const [japaneseDate, setJapaneseDate] = useState(japanDate);
 	const [getMeals, setGetMeals] = useState([]);
 	const [menu, setMenu] = useState("");
+	const [error, setError] = useState("");
 
 	const handleDateChange = (date) => {
 		const newDate = dateChange(date);
+		const newJDate = japaneseDateChange(date);
 		setSelectedDate(newDate);
+		setJapaneseDate(newJDate);
 		//console.log(newDate);
 	};
 
@@ -28,11 +37,18 @@ const Calendar = () => {
 	const addMenu = () => {
 		const id = getMeals[0]._id;
 		//console.log(menuId);
-		createMenu(id, menu).then((res) => {
-			//console.log(res.data);
-			callMeals();
-			setMenu("");
-		});
+		if (menu === "") {
+			setError("メニューが入力されていません。");
+			return false;
+		} else {
+			createMenu(id, menu).then((res) => {
+				//console.log(res.data);
+				toast.success(`メニューに${menu}を作成しました。`);
+				callMeals();
+				setMenu("");
+				setError("");
+			});
+		}
 	};
 
 	const callMeals = () => {
@@ -47,7 +63,6 @@ const Calendar = () => {
 		//console.log(date);
 		createMeal(date).then((res) => {
 			//console.log(res);
-			alert(`メニューをを追加しました`);
 			callMeals();
 		});
 	};
@@ -57,30 +72,44 @@ const Calendar = () => {
 	}, [selectedDate]);
 
 	return (
-		<>
+		<Container maxWidth="md">
 			<DatePicker
 				handleDateChange={handleDateChange}
 				selectedDate={selectedDate}
 			/>
 			{getMeals.length > 0 ? (
-				""
+				<InputMeal
+					menu={menu}
+					meals={getMeals}
+					onChange={handleMenuChange}
+					click={addMenu}
+					japaneseDate={japaneseDate}
+					error={error}
+				/>
 			) : (
-				<button onClick={ClickMeal}>メニューを作成</button>
+				<Grid container justify="center">
+					<Fab
+						style={{ marginTop: "25px" }}
+						color="primary"
+						variant="extended"
+						onClick={ClickMeal}>
+						{`${japaneseDate}のメニュー表を作成`}
+					</Fab>
+				</Grid>
 			)}
-			<InputMeal
-				menu={menu}
-				meals={getMeals}
-				onChange={handleMenuChange}
-				click={addMenu}
-			/>
 			<MealMenu
 				meals={getMeals}
 				setGetMeals={setGetMeals}
 				callMeals={callMeals}
 				menu={menu}
+				japaneseDate={japaneseDate}
 			/>
-			<CheckUserList meals={getMeals} callMeals={callMeals} />
-		</>
+			<CheckUserList
+				meals={getMeals}
+				callMeals={callMeals}
+				japanDate={japaneseDate}
+			/>
+		</Container>
 	);
 };
 

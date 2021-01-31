@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
 	createMeal,
+	deleteMeal,
 	getAllMeals,
 	getMealByDate,
 	removeMenu,
@@ -21,5 +22,6 @@ router.put("/meal/users/:id", addUser);
 router.put("/meal/pull-users/:id", pullUser);
 router.put("/meal/dish/users/:id", dishUser);
 router.put("/meal/undish/users/:id", pullDishUser);
+router.delete("/meal/:id", deleteMeal);
 
 module.exports = router;

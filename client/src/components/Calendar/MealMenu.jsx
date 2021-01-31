@@ -4,35 +4,23 @@ import {
 	pullToUser,
 	washUser,
 	pullWashUser,
+	removeMeal,
 } from "../../functions/meal";
-import { makeStyles } from "@material-ui/core/styles";
-import Chip from "@material-ui/core/Chip";
-
-const useStyles = makeStyles((theme) => ({
-	modal: {
-		display: "flex",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	paper: {
-		backgroundColor: theme.palette.background.paper,
-		border: "2px solid #000",
-		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3),
-	},
-	typography: {
-		padding: theme.spacing(2),
-	},
-}));
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { Menus, Eaters } from "./index";
+import Button from "@material-ui/core/Button";
+import { toast } from "react-toastify";
 
 const MealMenu = (props) => {
-	const classes = useStyles();
-	const { callMeals, meals, setGetMeals } = props;
+	const { callMeals, meals, japaneseDate } = props;
 
 	const pulledUser = (id, name) => {
 		if (window.confirm("食べないに変更しますか？")) {
 			pullToUser(id, name).then((res) => {
-				callMeals();
+				pullWashUser(id, name).then((res) => {
+					callMeals();
+				});
 			});
 		}
 	};
@@ -40,7 +28,6 @@ const MealMenu = (props) => {
 	const cleanDish = (id, name) => {
 		if (window.confirm(`${name}さんを当番に追加しますか？`)) {
 			washUser(id, name).then((res) => {
-				alert(`${name}さんを当番に追加しました。`);
 				callMeals();
 			});
 		}
@@ -49,7 +36,6 @@ const MealMenu = (props) => {
 	const pullDishWashing = (id, name) => {
 		if (window.confirm(`${name}さんを当番から外しますか？`)) {
 			pullWashUser(id, name).then((res) => {
-				alert(`${name}さんを当番から外しました。`);
 				callMeals();
 			});
 		}
@@ -60,6 +46,15 @@ const MealMenu = (props) => {
 		if (window.confirm("本当に削除しますか？")) {
 			deleteMenus(id, menu).then((res) => {
 				//console.log(res.data);
+				toast.error(`${menu}を削除しました。`);
+				callMeals();
+			});
+		}
+	};
+
+	const deleteMeal = (id) => {
+		if (window.confirm(`${japaneseDate}のまかないをお休みに変更しますか？`)) {
+			removeMeal(id).then((res) => {
 				callMeals();
 			});
 		}
@@ -69,76 +64,35 @@ const MealMenu = (props) => {
 		<div>
 			{meals.length > 0 ? (
 				meals.map((meal) => (
-					<div key={meal._id}>
-						<h2>本日のメニュー</h2>
-						<ul>
-							{meal.menus.length === 0 ? (
-								<p>現在メニューは作成されていません。</p>
-							) : (
-								meal.menus.map((m) => (
-									<li key={m.menu}>
-										{m.menu}
-										<span>
-											<button onClick={() => deleteButton(meal._id, m.menu)}>
-												削除
-											</button>
-										</span>
-									</li>
-								))
-							)}
-						</ul>
-						<br />
-						{meal.users.length === 0 ? (
-							""
-						) : (
-							<p>{meal.users.length}人が喫食予定です。</p>
-						)}
-
-						<h3>本日の喫食者</h3>
-						{meal.users.length === 0 ? (
-							<p>本日の喫食者はいません。</p>
-						) : (
-							meal.users.map((user) => (
-								<React.Fragment key={user.name}>
-									<Chip
-										label={user.name}
-										clickable
-										color="secondary"
-										variant="outlined"
-									/>
-									<div className={classes.typography}>
-										<p>{`${user.name}さんのメニュー`}</p>
-										<button onClick={() => pulledUser(meal._id, user.name)}>
-											食べないに変更
-										</button>
-										<button onClick={() => cleanDish(meal._id, user.name)}>
-											食器洗い当番に追加
-										</button>
-									</div>
-								</React.Fragment>
-							))
-						)}
-						<h3>当番</h3>
-						{meal.dishWashing.length === 0 ? (
-							<p>現在の当番はいません。</p>
-						) : (
-							meal.dishWashing.map((u) => (
-								<Chip
-									key={u.name}
-									label={u.name}
-									clickable
-									color="secondary"
-									variant="outlined"
-									onClick={() => pullDishWashing(meal._id, u.name)}
-								/>
-							))
-						)}
-						<h3>従業員一覧</h3>
-						<p>{meal.date}の昼食は食べますか？</p>
-					</div>
+					<React.Fragment key={meal._id}>
+						<Grid container justify="center">
+							<Button
+								style={{ margin: "0 auto" }}
+								onClick={() => deleteMeal(meal._id)}
+								color="secondary">
+								まかないをお休みに変更
+							</Button>
+						</Grid>
+						<Grid container justify="center">
+							<Menus meal={meal} deleteButton={deleteButton} />
+							<Eaters
+								meal={meal}
+								cleanDish={cleanDish}
+								pulledUser={pulledUser}
+								pullDishWashing={pullDishWashing}
+							/>
+						</Grid>
+					</React.Fragment>
 				))
 			) : (
-				<p>現在メニューはありません</p>
+				<Grid container justify="center">
+					<Typography
+						variant="subtitle1"
+						gutterBottom
+						style={{
+							marginTop: "30px",
+						}}>{`${japaneseDate}のまかないはお休みです。`}</Typography>
+				</Grid>
 			)}
 		</div>
 	);
