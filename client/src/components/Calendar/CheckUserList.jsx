@@ -3,6 +3,10 @@ import { getUsers } from "../../functions/userList";
 import { addToUser } from "../../functions/meal";
 import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
+import DoneIcon from "@material-ui/icons/Done";
+import { HiOutlineEmojiHappy } from "react-icons/hi";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
 
 const CheckUserList = ({ meals, callMeals, japanDate }) => {
 	const [userList, setUserList] = useState([]);
@@ -33,7 +37,9 @@ const CheckUserList = ({ meals, callMeals, japanDate }) => {
 			{meals.length > 0 ? (
 				<>
 					<Grid container justify="center">
-						<h3>従業員一覧</h3>
+						<Typography variant="h5" style={{ marginTop: "30px" }}>
+							Member list
+						</Typography>
 					</Grid>
 					<Grid container justify="center">
 						<p>{japanDate}の昼食は食べますか？</p>
@@ -44,16 +50,23 @@ const CheckUserList = ({ meals, callMeals, japanDate }) => {
 			)}
 			{meals.length > 0
 				? userList.map((user) => (
-						<React.Fragment key={user._id}>
+						<Tooltip title="食べるに追加" key={user._id}>
 							<Chip
 								style={{ marginRight: "3px", marginBottom: "5px" }}
-								label={`${user.name}(今日は食べる)`}
+								icon={
+									<HiOutlineEmojiHappy
+										style={{ width: "20px", height: "20px" }}
+									/>
+								}
+								label={user.name}
+								onDelete={() => addedUser(meals[0]._id, user.name)}
+								deleteIcon={<DoneIcon />}
 								clickable
 								color="default"
 								variant="default"
 								onClick={() => addedUser(meals[0]._id, user.name)}
 							/>
-						</React.Fragment>
+						</Tooltip>
 				  ))
 				: ""}
 		</div>

@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { Menus, Eaters } from "./index";
 import Button from "@material-ui/core/Button";
+import { toast } from "react-toastify";
 
 const MealMenu = (props) => {
 	const { callMeals, meals, japaneseDate } = props;
@@ -45,6 +46,7 @@ const MealMenu = (props) => {
 		if (window.confirm("本当に削除しますか？")) {
 			deleteMenus(id, menu).then((res) => {
 				//console.log(res.data);
+				toast.error(`${menu}を削除しました。`);
 				callMeals();
 			});
 		}

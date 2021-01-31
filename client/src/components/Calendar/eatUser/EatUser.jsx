@@ -2,6 +2,7 @@ import React from "react";
 import Chip from "@material-ui/core/Chip";
 import Tooltip from "@material-ui/core/Tooltip";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 const EatUser = (props) => {
 	const { user, meal, cleanDish, pulledUser } = props;
@@ -18,6 +19,11 @@ const EatUser = (props) => {
 			clickable
 			color="primary"
 			variant="default"
+			deleteIcon={
+				<Tooltip title="食べないに変更">
+					<CancelIcon />
+				</Tooltip>
+			}
 		/>
 	);
 };
