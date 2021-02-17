@@ -87,3 +87,5 @@ const BuyList = () => {
 };
 
 export default BuyList;
+
+// test
